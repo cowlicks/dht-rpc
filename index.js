@@ -301,6 +301,7 @@ class DHT extends EventEmitter {
   }
 
   _request (to, internal, command, target, value, session, onresponse, onerror) {
+    console.log(`_request: to ${to} | cmd ${command} | val ${value}`);
     const req = this.io.createRequest(to, null, internal, command, target, value, session)
     if (req === null) return null
 
@@ -765,6 +766,7 @@ class DHT extends EventEmitter {
     this._refreshTicks = REFRESH_TICKS
 
     const backgroundCon = Math.min(this.concurrency, Math.max(2, (this.concurrency / 8) | 0))
+    console.log('bg bootstrap query');
     const q = new Query(this, target, true, FIND_NODE, null, { concurrency: backgroundCon, maxSlow: 0 })
 
     q.on('data', () => {
